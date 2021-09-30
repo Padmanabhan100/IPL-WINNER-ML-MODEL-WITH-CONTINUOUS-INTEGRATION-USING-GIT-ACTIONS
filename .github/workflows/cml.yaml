@@ -15,5 +15,11 @@ jobs:
           python preprocess.py
           python train.py
           
-          echo "----MODEL METRICS----"
-          cat metrics.txt
+          echo "DATA VIZ" >> report.md
+          echo "----MODEL METRICS----" > report.md
+          cat metrics.txt >> report.md
+          
+        
+          cml-publish CONFUSION MATRIX FOR RANDOM FOREST.png --md >> report.md
+          
+          cml-send-comment report.md
