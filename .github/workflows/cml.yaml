@@ -1,0 +1,25 @@
+name: IPL-Winner-Prediction-Model
+on: [push]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - uses: iterative/setup-cml@v1
+      - name: Train model
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pip install -r requirements.txt
+          python preprocess.py
+          python train.py
+          
+          echo "DATA VIZ" >> report.md
+          echo "----MODEL METRICS----" > report.md
+          cat metrics.txt >> report.md
+          
+        
+          cml-publish 'CONFUSION MATRIX FOR RANDOM FOREST.png' --md >> report.md
+          
+          cml-send-comment report.md
