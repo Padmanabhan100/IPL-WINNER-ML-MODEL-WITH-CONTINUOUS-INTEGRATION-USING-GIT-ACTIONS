@@ -20,6 +20,6 @@ jobs:
           cat metrics.txt >> report.md
           
         
-          cml-publish CONFUSION MATRIX FOR RANDOM FOREST.png --md >> report.md
+          cml-publish 'CONFUSION MATRIX FOR RANDOM FOREST.png' --md >> report.md
           
           cml-send-comment report.md
